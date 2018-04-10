@@ -38,6 +38,7 @@ open class EventSource: NSObject, URLSessionDataDelegate {
     var event = Dictionary<String, String>()
 
 
+    @objc
     public init(url: String, headers: [String : String] = [:]) {
 
         self.url = URL(string: url)!
@@ -58,9 +59,11 @@ open class EventSource: NSObject, URLSessionDataDelegate {
         super.init()
         self.connect()
     }
+    
 
 //Mark: Connect
 
+    @objc
     func connect() {
         var additionalHeaders = self.headers
         if let eventID = self.lastEventID {
@@ -93,7 +96,7 @@ open class EventSource: NSObject, URLSessionDataDelegate {
     }
 
 //Mark: Close
-
+    @objc
     open func close() {
         self.readyState = EventSourceState.closed
         self.urlSession?.invalidateAndCancel()
@@ -113,10 +116,12 @@ open class EventSource: NSObject, URLSessionDataDelegate {
 
 //Mark: EventListeners
 
+    @objc
     open func onOpen(_ onOpenCallback: @escaping (() -> Void)) {
         self.onOpenCallback = onOpenCallback
     }
 
+    @objc
     open func onError(_ onErrorCallback: @escaping ((NSError?) -> Void)) {
         self.onErrorCallback = onErrorCallback
 
@@ -126,24 +131,29 @@ open class EventSource: NSObject, URLSessionDataDelegate {
         }
     }
 
+    @objc
     open func onMessage(_ onMessageCallback: @escaping ((_ id: String?, _ event: String?, _ data: String?) -> Void)) {
         self.onMessageCallback = onMessageCallback
     }
 
+    @objc
     open func addEventListener(_ event: String, handler: @escaping ((_ id: String?, _ event: String?, _ data: String?) -> Void)) {
         self.eventListeners[event] = handler
     }
 
+    @objc
 	open func removeEventListener(_ event: String) -> Void {
 		self.eventListeners.removeValue(forKey: event)
 	}
 
+    @objc
 	open func events() -> Array<String> {
 		return Array(self.eventListeners.keys)
 	}
 
 //MARK: URLSessionDataDelegate
 
+    
     open func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
 		if self.receivedMessageToClose(dataTask.response as? HTTPURLResponse) {
 			return
