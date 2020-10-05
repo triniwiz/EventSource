@@ -73,6 +73,8 @@ public protocol EventSourceProtocol {
     func removeEventListener(_ event: String)
 }
 
+@objcMembers
+@objc(EventSource)
 open class EventSource: NSObject, EventSourceProtocol, URLSessionDataDelegate {
     static let DefaultRetryTime = 3000
 
@@ -124,7 +126,8 @@ open class EventSource: NSObject, EventSourceProtocol, URLSessionDataDelegate {
         self.onOpenCallback = onOpenCallback
     }
 
-    public func onComplete(_ onComplete: @escaping ((Int?, Bool?, NSError?) -> Void)) {
+    // (Int?, Bool?, NSError?)
+    public func onComplete(_ onComplete: @escaping ((Any?, Any?, NSError?) -> Void)) {
         self.onComplete = onComplete
     }
 
