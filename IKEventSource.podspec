@@ -13,4 +13,5 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
   s.source       = { :git => "https://github.com/inaka/EventSource.git" }
   s.source_files  = "EventSource/*.swift"
+  s.swift_versions = ['4.0','4.2', '5.0']
 end
