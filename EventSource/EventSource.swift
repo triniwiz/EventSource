@@ -127,7 +127,7 @@ open class EventSource: NSObject, EventSourceProtocol, URLSessionDataDelegate {
     }
 
     // (Int?, Bool?, NSError?)
-    public func onComplete(_ onComplete: @escaping ((Any?, Any?, NSError?) -> Void)) {
+    public func onComplete(_ onComplete: @escaping ((Any, Any, NSError?) -> Void)) {
         self.onComplete = onComplete
     }
 
